@@ -20,6 +20,13 @@
   become: true
 
   tasks:
+  - name: Load prerequisites for CentOS
+    dnf:
+      package:
+        - yum-utils
+      state: present
+    when: ansible_os_family == 'RedHat'
+
   - name: Patch Ubuntu/Debian Servers
     apt:
       update_cache: true
@@ -35,6 +42,12 @@
     register: reboot_required_file
     when: ansible_os_family == 'Debian'
 
+  - name: Check reboot required RedHat
+    shell:
+      command: needs_restarting
+    register: reboot_required_redhat
+    when: ansible_os_family == 'RedHat'
+
   - name: Patch CentOS Servers
     dnf:
       update_only: true
@@ -47,3 +60,10 @@
       connect_timeout: 5
       test_command: uptime
     when: ansible_os_family == 'Debian' and reboot_required_file.stat.exists
+
+  - name: Reboot RedHat Servers
+    reboot:
+      msg: "Reboot initiated by Ansible"
+      connect_timeout: 5
+      test_command: uptime
+    when: ansible_os_family == 'RedHat' and reboot_required_redhat contains "Reboot is required"
