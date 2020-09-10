@@ -36,6 +36,12 @@
       autoremove: true
     when: ansible_os_family == 'Debian'
 
+  - name: Patch CentOS Servers
+    dnf:
+      update_only: true
+      autoremove: true
+    when: ansible_os_family == 'RedHat'
+
   - name: Check reboot required Debian
     stat:
       path: /var/run/reboot-required
@@ -45,12 +51,6 @@
   - name: Check reboot required RedHat
     command: needs-restarting -r
     register: reboot_required_redhat
-    when: ansible_os_family == 'RedHat'
-
-  - name: Patch CentOS Servers
-    dnf:
-      update_only: true
-      autoremove: true
     when: ansible_os_family == 'RedHat'
 
   - name: Reboot Debian Servers
