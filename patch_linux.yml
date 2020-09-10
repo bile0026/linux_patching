@@ -22,7 +22,7 @@
   tasks:
   - name: Load prerequisites for CentOS
     dnf:
-      package:
+      name:
         - yum-utils
       state: present
     when: ansible_os_family == 'RedHat'
@@ -43,8 +43,7 @@
     when: ansible_os_family == 'Debian'
 
   - name: Check reboot required RedHat
-    shell:
-      command: needs_restarting
+    command: needs-restarting -r
     register: reboot_required_redhat
     when: ansible_os_family == 'RedHat'
 
@@ -66,4 +65,7 @@
       msg: "Reboot initiated by Ansible"
       connect_timeout: 5
       test_command: uptime
-    when: ansible_os_family == 'RedHat' and reboot_required_redhat contains "Reboot is required"
+    when:
+      - ansible_os_family == 'RedHat'
+      # - 'Reboot is required' in reboot_required_redhat.stdout
+      - reboot_required_redhat.stdout | regex_search("reboot is required", multiline=True, ignorecase=True)
