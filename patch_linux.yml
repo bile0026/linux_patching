@@ -68,4 +68,4 @@
     when:
       - ansible_os_family == 'RedHat'
       # - 'Reboot is required' in reboot_required_redhat.stdout
-      - reboot_required_redhat.stdout | regex_search("reboot is required", multiline=True, ignorecase=True)
+      - reboot_required_redhat.stdout | regex_search("Reboot is required", multiline=True, ignorecase=True)
