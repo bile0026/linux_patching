@@ -21,7 +21,7 @@
 
   tasks:
   - name: Load prerequisites for CentOS
-    dnf:
+    package:
       name:
         - yum-utils
       state: present
