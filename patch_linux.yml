@@ -37,7 +37,7 @@
     when: ansible_os_family == 'Debian'
 
   - name: Patch CentOS Servers
-    dnf:
+    yum:
       update_only: true
       autoremove: true
     when: ansible_os_family == 'RedHat'
