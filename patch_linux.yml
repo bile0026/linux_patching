@@ -50,7 +50,8 @@
 
   - name: Check reboot required RedHat
     # command: needs-restarting -r
-    command: needs-restarting -r || true
+    shell:
+      cmd: needs-restarting -r || true
     register: reboot_required_redhat
     when: ansible_os_family == 'RedHat'
 
