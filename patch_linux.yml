@@ -40,7 +40,6 @@
       yum:
         name: "*"
         state: latest
-        autoremove: true
       when: ansible_os_family == 'RedHat'
 
     - name: Check reboot required Debian
