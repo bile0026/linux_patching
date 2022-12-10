@@ -1,7 +1,7 @@
 ---
 - name: Linux Patching playbook
   hosts: all
-  gather_facts: false
+  gather_facts: true
   vars:
     check_reachability: true
 
