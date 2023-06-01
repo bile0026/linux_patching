@@ -9,10 +9,10 @@
   tasks:
 
     - name: Ping then patch
-      ansible.builtin.import_tasks: './patch_linux_ping.yml'
+      ansible.builtin.include_tasks: "./patch_linux_ping.yml"
       when: check_reachability
 
 
     - name: Don't Ping, just patch
-      ansible.builtin.import_tasks: './patch_linux_no_ping.yml'
+      ansible.builtin.include_tasks: "./patch_linux_no_ping.yml"
       when: not check_reachability
